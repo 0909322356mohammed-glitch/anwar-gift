@@ -7,15 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --primary-color: #e63946;
+  --primary: #ff4d6d;
   --bg-gradient: linear-gradient(135deg, #ffdde6 0%, #ffc6c6 100%);
 }
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Tajawal', sans-serif;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
 body {
   background: var(--bg-gradient);
   min-height: 100vh;
@@ -23,325 +18,231 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  overflow-x: hidden;
-  position: relative;
 }
 
-/* الورود والقلوب الطايرة */
-.falling-container {
-  position: fixed;
-  top: 0;
-  left: 0;
+/* صفحة الباسويرد */
+#loginPage {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  padding: 40px 30px;
+  border-radius: 25px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 1;
-  pointer-events: none;
 }
-.petal, .floating-heart {
-  position: absolute;
-  display: block;
-  opacity: 0.7;
-  animation: fall linear infinite;
+#loginPage h2 { color: #ff2a54; margin-bottom: 20px; font-size: 1.8rem; }
+#loginPage input {
+  width: 100%; padding: 15px; border: 2px solid #ffcccc;
+  border-radius: 15px; font-size: 1.1rem; text-align: center;
+  margin-bottom: 15px; outline: none;
 }
-.petal {
-  background: #ff4d6d;
-  border-radius: 0 70% 0 70%;
+#loginPage input:focus { border-color: var(--primary); }
+#loginPage button {
+  width: 100%; padding: 15px; background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  color: white; border: none; border-radius: 15px; font-size: 1.1rem;
+  font-weight: 700; cursor: pointer; transition: 0.3s;
 }
-.petal:nth-child(even) {
-  background: #ff758f;
-  border-radius: 70% 0 70% 0;
-}
-.floating-heart {
-  font-size: 20px;
-  color: #ff2a54;
-}
-@keyframes fall {
- 0% { opacity: 0; top: -10%; transform: translateX(0) rotate(0deg); }
- 10% { opacity: 0.8; }
- 90% { opacity: 0.8; }
- 100% { opacity: 0; top: 110%; transform: translateX(100px) rotate(360deg); }
-}
+.error { color: #d63384; margin-top: 10px; font-weight: 600; }
 
+/* الصفحة الرئيسية */
+#mainPage { display: none; width: 100%; max-width: 800px; }
 .container {
   text-align: center;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(15px);
   padding: 30px;
   border-radius: 25px;
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  max-width: 500px;
-  width: 100%;
-  z-index: 2;
-  position: relative;
 }
 
-.photos {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-}
+.photos { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; }
 .photos img {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  border: 3px solid white;
-  object-fit: cover;
+  width: 90px; height: 90px; border-radius: 50%;
+  border: 3px solid white; object-fit: cover;
   box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
 .heart {
-  width: 60px;
-  height: 60px;
-  background: #ff4d6d;
-  position: relative;
-  margin: 0 auto 20px;
-  animation: beat 0.8s infinite alternate;
-  transform: rotate(-45deg);
+  width: 60px; height: 60px; background: var(--primary);
+  position: relative; margin: 0 auto 20px;
+  animation: beat 0.8s infinite alternate; transform: rotate(-45deg);
 }
-.heart::before, .heart::after {
-  content: "";
-  width: 60px;
-  height: 60px;
-  background: #ff4d6d;
-  border-radius: 50%;
-  position: absolute;
+.heart::before,.heart::after {
+  content: ""; width: 60px; height: 60px; background: var(--primary);
+  border-radius: 50%; position: absolute;
 }
 .heart::before { top: -30px; left: 0; }
 .heart::after { top: 0; left: 30px; }
-@keyframes beat {
-  to { transform: scale(1.1) rotate(-45deg); }
-}
+@keyframes beat { to { transform: scale(1.1) rotate(-45deg); } }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  color: #ff2a54;
-  font-weight: bold;
-}
-.sender {
-  font-size: 0.95rem;
-  color: #666;
-  margin-bottom: 20px;
-  font-style: italic;
-}
+h1 { font-size: 2rem; margin-bottom: 10px; color: #ff2a54; font-weight: 700; }
+.sender { font-size: 0.95rem; color: #666; margin-bottom: 20px; font-style: italic; }
 
-.section-title {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #d9405b;
-  margin: 15px 0 10px;
+/* التبويبات */
+.tabs {
+  display: flex; gap: 10px; margin-bottom: 20px;
+  flex-wrap: wrap; justify-content: center;
 }
-.countdown {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-.time-box {
+.tab-btn {
   background: rgba(255, 77, 109, 0.1);
-  border: 1px solid rgba(255, 77, 109, 0.3);
-  padding: 8px 10px;
-  border-radius: 10px;
-  min-width: 65px;
+  border: 2px solid rgba(255, 77, 109, 0.3);
+  padding: 12px 20px; border-radius: 15px;
+  cursor: pointer; font-weight: 600; color: #d9405b;
+  transition: 0.3s; flex: 1; min-width: 150px;
 }
-.time-box span {
-  display: block;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #ff4d6d;
-}
-.time-box label {
-  font-size: 0.75rem;
-  color: #555;
+.tab-btn.active,.tab-btn:hover {
+  background: var(--primary); color: white;
 }
 
-/* الأزرار الحمراء */
-.buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 20px;
-}
-.btn {
-  background: linear-gradient(135deg, #ff4d6d, #ff758f);
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 50px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
-}
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 77, 109, 0.5);
-}
-
-.interactive-box {
-  margin-top: 20px;
-  display: none;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 20px;
-  border-radius: 15px;
-  border: 1px solid rgba(255, 77, 109, 0.2);
-  animation: fadeIn 0.5s ease-in-out;
-}
+.tab-content { display: none; text-align: right; line-height: 1.9; }
+.tab-content.active { display: block; animation: fadeIn 0.5s; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.quiz-option {
-  background: #f0f0f0;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
+.story-box {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px; border-radius: 15px;
+  margin-bottom: 15px; border-right: 4px solid var(--primary);
 }
-.quiz-option:hover {
-  background: #ffe6f0;
-  color: #ff4d6d;
-}
+.story-box h3 { color: #ff2a54; margin-bottom: 10px; font-size: 1.2rem; }
+.story-box p { color: #444; font-size: 1rem; }
 
-.gift-box {
-  font-size: 50px;
-  cursor: pointer;
-  animation: bounce 1s infinite alternate;
+.logout {
+  margin-top: 20px; background: transparent;
+  border: 2px solid var(--primary); color: var(--primary);
+  padding: 10px 20px; border-radius: 15px; cursor: pointer;
+  font-weight: 600; transition: 0.3s;
 }
-@keyframes bounce {
-  to { transform: translateY(-10px); }
-}
+.logout:hover { background: var(--primary); color: white; }
 
-audio { display: none; }
+audio { width: 100%; margin-top: 15px; border-radius: 10px; }
 </style>
 </head>
 <body>
 
-<div class="falling-container" id="fallingContainer"></div>
+<!-- صفحة الدخول -->
+<div id="loginPage">
+  <h2>💖 صفحة أنوار الخاصة 💖</h2>
+  <p style="margin-bottom: 20px; color: #666;">اكتبي كلمة السر عشان تفتحي الهدية</p>
+  <input type="password" id="password" placeholder="اكتبي كلمة السر هنا">
+  <button onclick="checkPassword()">دخول</button>
+  <p class="error" id="error"></p>
+</div>
 
-<div class="container">
-  <!-- الصور -->
-  <div class="photos">
-    <img src="mohammed.jpg" alt="محمد">
-    <img src="anwar.jpg" alt="أنوار">
-  </div>
+<!-- الصفحة الرئيسية -->
+<div id="mainPage">
+  <div class="container">
+    <!-- الصور والأغنية -->
+    <div class="photos">
+      <img src="mohammed.jpg" alt="محمد">
+      <img src="anwar.jpg" alt="أنوار">
+    </div>
 
-  <div class="heart"></div>
-  <h1>إلى حبيبتي: أنوار صالح الكنزي ❤️</h1>
-  <div class="sender">بكل الحب من: محمد إبراهيم محمد إبراهيم</div>
+    <audio controls>
+      <source src="music.mp3" type="audio/mpeg">
+      متصفحك ما بدعم تشغيل الأغنية
+    </audio>
 
-  <div class="section-title">الوقت الذي عشته بوجودكِ في حياتي:</div>
-  <div class="countdown">
-    <div class="time-box"><span id="days">00</span><label>أيام</label></div>
-    <div class="time-box"><span id="hours">00</span><label>ساعات</label></div>
-    <div class="time-box"><span id="minutes">00</span><label>دقائق</label></div>
-    <div class="time-box"><span id="seconds">00</span><label>ثواني</label></div>
-  </div>
+    <div class="heart"></div>
+    <h1>إلى حبيبتي: أنوار صالح الكنزي ❤️</h1>
+    <div class="sender">بكل الحب من: محمد إبراهيم محمد إبراهيم</div>
 
-  <!-- الأزرار التلاتة ما اتمسحت -->
-  <div class="buttons">
-    <button class="btn" onclick="toggleBox('messageBox')">💌 اقرئي رسالتي لكِ</button>
-    <button class="btn" onclick="toggleBox('quizBox')">🎮 لعبة الأسئلة التفاعلية</button>
-    <button class="btn" onclick="toggleBox('giftBoxSection')">🎁 افتحي صندوق المفاجآت</button>
-  </div>
+    <!-- التبويبات -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="openTab('love')">قصص حبنا</button>
+      <button class="tab-btn" onclick="openTab('weird')">أغرب قصص الحب</button>
+      <button class="tab-btn" onclick="openTab('prophets')">قصص الأنبياء</button>
+    </div>
 
-  <div id="messageBox" class="interactive-box">
-    يا أنوار، كل يوم يمر وأنتِ معي هو عيد وعمر جديد لي. لا يمكن للكلمات أن تصف كم أنا محظوظ وممتن لأنكِ في حياتي. أحبكِ من كل قلبي وستظلين دائماً أميرتي وطفلتي الوحيدة. دمتِ لي نبضاً لا ينتهي!
-  </div>
+    <!-- قسم قصص حبنا -->
+    <div id="love" class="tab-content active">
+      <div class="story-box">
+        <h3>بداية قصتنا</h3>
+        <p>ما حصل اتقابلنا لسه، لكن كلامنا خلاني أعرفك أكتر من ناس بعرفهم من سنين. علاقتنا بدت في الفاشر قبل سنتين، والحرب فرقتنا بين تشاد والسودان، لكن القلوب ما اتفرقت.</p>
+      </div>
+      <div class="story-box">
+        <h3>وعدي ليكِ</h3>
+        <p>بوعدك يا أنوار إني ما أسيبك، ومهما طالت المسافة ح أجيك. اليوم الجاي دا ح نعوض كل الثواني الفاتت بفرح ما بيخلص.</p>
+      </div>
+    </div>
 
-  <div id="quizBox" class="interactive-box">
-    <p style="font-weight: bold; margin-bottom: 10px;">من يحبكِ أكثر شخص في هذا الكون كله؟</p>
-    <div class="quiz-option" onclick="answerQuiz(false)">العالم كله 🌍</div>
-    <div class="quiz-option" onclick="answerQuiz(true)">محمد إبراهيم بالتأكيد! 🥰</div>
-    <div class="quiz-option" onclick="answerQuiz(false)">النجوم والقمر 🌟</div>
-    <p id="quizResult" style="margin-top:10px; font-weight:bold; color:#ff2a54;"></p>
-  </div>
+    <!-- قسم أغرب قصص الحب -->
+    <div id="weird" class="tab-content">
+      <div class="story-box">
+        <h3>قصة الحب عبر الرسائل لـ 20 سنة</h3>
+        <p>
+        في قرية صغيرة في ألمانيا سنة 1950، كان في شاب اسمو هانز بيشتغل ساعي بريد. يوم من الأيام وصلتو رسالة غلط، كانت موجهة لبنت اسمها ماريا في نفس القرية. بدل ما يرجعها، قرر يرد عليها برسالة من عندو.
+        <br><br>
+        ماريا كانت مندهشة لكن ردت. ومن هنا بدت مراسلات بيناتهم استمرت 20 سنة كاملة. المشكلة إنو الاتنين كانو خجلانين يتلاقو، ففضلو يكتبو لبعض عن كل حاجة: أحلامهم، خوفهم، حبهم، حتى تفاصيل يومهم العادي.
+        <br><br>
+        بعد 20 سنة، أخيراً اتشجعو واتفقو يتقابلو في نفس المكان الإتلاقو فيهو بالرسالة الأولى - مكتب البريد. لما شافو بعض، ما احتاجو كلام. 20 سنة من الرسائل خلتهم يعرفو بعض أكتر من أي اتنين متزوجين.
+        <br><br>
+        اتزوجو بعد شهر، وعاشو مع بعض 40 سنة تانية لحد ما ماتو في نفس الأسبوع. القصة دي بتثبت إنو الحب الحقي ما محتاج شوفة عين، محتاج قلب بيسمع ويفهم.
+        </p>
+      </div>
+    </div>
 
-  <div id="giftBoxSection" class="interactive-box">
-    <p style="margin-bottom: 10px;">اضغطي على الصندوق لفتح المفاجأة:</p>
-    <div class="gift-box" onclick="openGift()">🎁</div>
-    <p id="giftResult" style="margin-top:15px; font-size:1.1rem; font-weight:bold; color:#d9405b;"></p>
+    <!-- قسم قصص الأنبياء -->
+    <div id="prophets" class="tab-content">
+      <div class="story-box">
+        <h3>قصة حب سيدنا آدم والسيدة حواء</h3>
+        <p>
+        لما ربنا خلق سيدنا آدم عليه السلام، كان عايش براهو في الجنة. حس بالوحدة، فخلق ليهو ربنا السيدة حواء من ضلعو وهو نايم.
+        <br><br>
+        أول ما صحى وشافها، حس بالراحة والسكينة. دي أول قصة حب في التاريخ البشري. رغم إنهم اتعاقبو ونزلو الأرض، فضلو مع بعض، وصبرو على التعب والمشقة، وبنو أول بيت وأول أسرة في الدنيا.
+        </p>
+      </div>
+
+      <div class="story-box">
+        <h3>قصة حب سيدنا يوسف وزليخة</h3>
+        <p>
+        سيدنا يوسف عليه السلام كان مثال للجمال والأخلاق. لما كبر في بيت العزيز، مرتو زليخة حبتو حب شديد. لكن يوسف كان تقي وخاف ربنا، فرفض واختار السجن على المعصية.
+        <br><br>
+        بعد سنين، لما بقى عزيز مصر، زليخة تابت وربنا جمعهم بالحلال. العبرة: الحب اللي بيخاف ربنا ربنا بيباركو وبيتممو على خير.
+        </p>
+      </div>
+    </div>
+
+    <button class="logout" onclick="logout()">تسجيل خروج</button>
   </div>
 </div>
 
-<!-- الأغنية -->
-<audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-function toggleBox(boxId) {
-  const boxes = ['messageBox', 'quizBox', 'giftBoxSection'];
-  boxes.forEach(id => {
-    const el = document.getElementById(id);
-    if (id === boxId) {
-      el.style.display = (el.style.display === "block") ? "none" : "block";
-    } else {
-      el.style.display = "none";
-    }
-  });
-}
-
-function answerQuiz(isCorrect) {
-  const result = document.getElementById('quizResult');
-  if(isCorrect) {
-    result.innerText = "إجابة صحيحة مئة بالمئة! محمد يعشقكِ بجنون ولا أحد في هذا الكون يحبكِ بقدره! ❤️";
+// كلمة السر m a
+function checkPassword() {
+  const pass = document.getElementById('password').value.trim();
+  if(pass === 'm a') {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('mainPage').style.display = 'block';
+    document.getElementById('error').innerText = '';
   } else {
-    result.innerText = "امممم، إجابة خاطئة! حاولي مجدداً، هناك شخص واحد فقط يموت في دباديبك! 😉";
+    document.getElementById('error').innerText = 'كلمة السر غلط يا أنوار 💔';
   }
 }
 
-function openGift() {
-  const gift = document.getElementById('giftResult');
-  gift.innerHTML = "✨ ليكي وعد من محمد بـ خروجة تجن، وعشاء رومانسي، وهدية تختارينها بنفسكِ وقت ما تحبين! 🍕💐";
-  
-  const music = document.getElementById('bgMusic');
-  music.play().catch(() => {
-    alert("اضغطي تاني على الصندوق عشان الأغنية تشتغل");
-  });
+// التبويبات
+function openTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  event.target.classList.add('active');
 }
 
-// تاريخ بداية الحب 16 يونيو 2023
-const startDate = new Date("June 16, 2023 00:00:00").getTime();
-setInterval(function() {
-  const now = new Date().getTime();
-  const difference = now - startDate;
-  const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-  const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-  const s = Math.floor((difference % (1000 * 60)) / 1000);
-  document.getElementById("days").innerText = d;
-  document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
-  document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
-  document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
-}, 1000);
-
-function createElements() {
-  const container = document.getElementById('fallingContainer');
-  if(!container) return;
-  const isHeart = Math.random() > 0.5;
-  const el = document.createElement('div');
-  if(isHeart) {
-    el.classList.add('floating-heart');
-    el.innerHTML = '❤️';
-  } else {
-    el.classList.add('petal');
-    const size = Math.random() * 15 + 10 + 'px';
-    el.style.width = size;
-    el.style.height = size;
-  }
-  el.style.left = Math.random() * 100 + 'vw';
-  el.style.animationDuration = Math.random() * 5 + 5 + 's';
-  container.appendChild(el);
-  setTimeout(() => { el.remove(); }, 10000);
+// تسجيل الخروج
+function logout() {
+  document.getElementById('mainPage').style.display = 'none';
+  document.getElementById('loginPage').style.display = 'block';
+  document.getElementById('password').value = '';
 }
-setInterval(createElements, 250);
+
+// Enter للدخول
+document.getElementById('password').addEventListener('keypress', function(e) {
+  if(e.key === 'Enter') checkPassword();
+});
 </script>
 </body>
 </html>
