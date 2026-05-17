@@ -16,9 +16,76 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding: 20px;
 }
+
+/* زر القائمة ☰ */
+.menu-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4);
+}
+.menu-btn:hover { transform: scale(1.1); }
+
+/* القائمة الجانبية - فيها القص بس */
+.sidebar-menu {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: -5px 0 30px rgba(0,0,0,0.2);
+  z-index: 999;
+  transition: 0.4s ease;
+  padding: 80px 20px 20px;
+}
+.sidebar-menu.active { right: 0; }
+.sidebar-menu h3 {
+  color: #ff2a54;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #ffcccc;
+  padding-bottom: 10px;
+}
+.menu-item {
+  display: block;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: rgba(255, 77, 109, 0.1);
+  border-radius: 12px;
+  color: #d9405b;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.menu-item:hover {
+  background: var(--primary);
+  color: white;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 998;
+  display: none;
+}
+.overlay.active { display: block; }
 
 /* صفحة الباسويرد */
 #loginPage {
@@ -30,6 +97,7 @@ body {
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
   max-width: 400px;
   width: 100%;
+  margin-top: 100px;
 }
 #loginPage h2 { color: #ff2a54; margin-bottom: 20px; font-size: 1.8rem; }
 #loginPage input {
@@ -37,17 +105,17 @@ body {
   border-radius: 15px; font-size: 1.1rem; text-align: center;
   margin-bottom: 15px; outline: none;
 }
-#loginPage input:focus { border-color: var(--primary); }
 #loginPage button {
   width: 100%; padding: 15px; background: linear-gradient(135deg, #ff4d6d, #ff758f);
   color: white; border: none; border-radius: 15px; font-size: 1.1rem;
-  font-weight: 700; cursor: pointer; transition: 0.3s;
+  font-weight: 700; cursor: pointer;
 }
 .error { color: #d63384; margin-top: 10px; font-weight: 600; }
 
 /* الصفحة الرئيسية */
-#mainPage { display: none; width: 100%; max-width: 800px; }
-.container {
+#mainPage { display: none; width: 100%; max-width: 900px; }
+
+.content {
   text-align: center;
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(15px);
@@ -80,49 +148,135 @@ body {
 h1 { font-size: 2rem; margin-bottom: 10px; color: #ff2a54; font-weight: 700; }
 .sender { font-size: 0.95rem; color: #666; margin-bottom: 20px; font-style: italic; }
 
-/* التبويبات */
-.tabs {
-  display: flex; gap: 10px; margin-bottom: 20px;
-  flex-wrap: wrap; justify-content: center;
+/* المؤقتات */
+.countdowns {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 25px 0;
 }
-.tab-btn {
+.countdown-box {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 15px;
+  border-right: 4px solid var(--primary);
+}
+.countdown-box h4 {
+  color: #ff2a54;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+.countdown-timer {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.time-box {
   background: rgba(255, 77, 109, 0.1);
-  border: 2px solid rgba(255, 77, 109, 0.3);
-  padding: 12px 20px; border-radius: 15px;
-  cursor: pointer; font-weight: 600; color: #d9405b;
-  transition: 0.3s; flex: 1; min-width: 150px;
+  border: 1px solid rgba(255, 77, 109, 0.3);
+  padding: 8px 10px;
+  border-radius: 10px;
+  min-width: 60px;
 }
-.tab-btn.active,.tab-btn:hover {
-  background: var(--primary); color: white;
+.time-box span {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
 }
+.time-box label { font-size: 0.75rem; color: #555; }
 
-.tab-content { display: none; text-align: right; line-height: 1.9; }
-.tab-content.active { display: block; animation: fadeIn 0.5s; }
+/* صندوق الهدية */
+.gift-box {
+  font-size: 60px;
+  cursor: pointer;
+  animation: bounce 1s infinite alternate;
+  margin: 20px 0;
+}
+@keyframes bounce { to { transform: translateY(-10px); } }
+
+/* الأسئلة الرومانسية */
+.questions-section {
+  margin-top: 30px;
+  text-align: right;
+}
+.question-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #ff4d6d, #ff758f);
+  color: white;
+  padding: 15px;
+  border-radius: 15px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+  text-align: right;
+  transition: 0.3s;
+}
+.question-btn:hover { transform: translateX(-5px); }
+
+.sub-questions {
+  display: none;
+  margin-right: 20px;
+  margin-bottom: 15px;
+}
+.sub-questions.active { display: block; animation: fadeIn 0.4s; }
+
+.sub-btn {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  color: #d9405b;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ffcccc;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-bottom: 8px;
+  text-align: right;
+}
+.sub-btn:hover { background: #ffe6f0; }
+
+.answer-box {
+  margin-top: 10px;
+  padding: 15px;
+  background: #fff0f5;
+  border-radius: 12px;
+  border: 1px solid #ffcccc;
+  color: #d63384;
+  font-weight: 600;
+  display: none;
+}
+.answer-box.show { display: block; animation: fadeIn 0.4s; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.story-box {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 20px; border-radius: 15px;
-  margin-bottom: 15px; border-right: 4px solid var(--primary);
-}
-.story-box h3 { color: #ff2a54; margin-bottom: 10px; font-size: 1.2rem; }
-.story-box p { color: #444; font-size: 1rem; }
-
+audio { display: none; }
 .logout {
   margin-top: 20px; background: transparent;
   border: 2px solid var(--primary); color: var(--primary);
   padding: 10px 20px; border-radius: 15px; cursor: pointer;
-  font-weight: 600; transition: 0.3s;
+  font-weight: 600;
 }
 .logout:hover { background: var(--primary); color: white; }
-
-audio { width: 100%; margin-top: 15px; border-radius: 10px; }
 </style>
 </head>
 <body>
+
+<!-- زر القائمة ☰ -->
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<!-- القائمة الجانبية فيها القص بس -->
+<div class="sidebar-menu" id="sidebarMenu">
+  <h3>📖 القص</h3>
+  <a class="menu-item" onclick="showSection('love'); toggleMenu()">💕 قصص حبنا</a>
+  <a class="menu-item" onclick="showSection('weird'); toggleMenu()">🌍 أغرب قصص الحب</a>
+  <a class="menu-item" onclick="showSection('prophets'); toggleMenu()">🕌 قصص الأنبياء</a>
+</div>
 
 <!-- صفحة الدخول -->
 <div id="loginPage">
@@ -135,81 +289,120 @@ audio { width: 100%; margin-top: 15px; border-radius: 10px; }
 
 <!-- الصفحة الرئيسية -->
 <div id="mainPage">
-  <div class="container">
-    <!-- الصور والأغنية -->
+  <div class="content">
     <div class="photos">
       <img src="mohammed.jpg" alt="محمد">
       <img src="anwar.jpg" alt="أنوار">
     </div>
 
-    <audio controls>
-      <source src="music.mp3" type="audio/mpeg">
-      متصفحك ما بدعم تشغيل الأغنية
-    </audio>
-
     <div class="heart"></div>
     <h1>إلى حبيبتي: أنوار صالح الكنزي ❤️</h1>
     <div class="sender">بكل الحب من: محمد إبراهيم محمد إبراهيم</div>
 
-    <!-- التبويبات -->
-    <div class="tabs">
-      <button class="tab-btn active" onclick="openTab('love')">قصص حبنا</button>
-      <button class="tab-btn" onclick="openTab('weird')">أغرب قصص الحب</button>
-      <button class="tab-btn" onclick="openTab('prophets')">قصص الأنبياء</button>
+    <!-- المؤقتات -->
+    <div class="countdowns">
+      <div class="countdown-box">
+        <h4>💕 مدة حبنا من 12/11/2024</h4>
+        <div class="countdown-timer">
+          <div class="time-box"><span id="loveDays">00</span><label>يوم</label></div>
+          <div class="time-box"><span id="loveHours">00</span><label>ساعة</label></div>
+          <div class="time-box"><span id="loveMinutes">00</span><label>دقيقة</label></div>
+          <div class="time-box"><span id="loveSeconds">00</span><label>ثانية</label></div>
+        </div>
+      </div>
+
+      <div class="countdown-box">
+        <h4>🎂 باقي لعيد ميلاد أنوار 23/7</h4>
+        <div class="countdown-timer">
+          <div class="time-box"><span id="anwarDays">00</span><label>يوم</label></div>
+          <div class="time-box"><span id="anwarHours">00</span><label>ساعة</label></div>
+          <div class="time-box"><span id="anwarMinutes">00</span><label>دقيقة</label></div>
+          <div class="time-box"><span id="anwarSeconds">00</span><label>ثانية</label></div>
+        </div>
+      </div>
+
+      <div class="countdown-box">
+        <h4>🎂 باقي لعيد ميلاد محمد 19/4</h4>
+        <div class="countdown-timer">
+          <div class="time-box"><span id="mohammedDays">00</span><label>يوم</label></div>
+          <div class="time-box"><span id="mohammedHours">00</span><label>ساعة</label></div>
+          <div class="time-box"><span id="mohammedMinutes">00</span><label>دقيقة</label></div>
+          <div class="time-box"><span id="mohammedSeconds">00</span><label>ثانية</label></div>
+        </div>
+      </div>
     </div>
 
-    <!-- قسم قصص حبنا -->
-    <div id="love" class="tab-content active">
-      <div class="story-box">
-        <h3>بداية قصتنا</h3>
-        <p>ما حصل اتقابلنا لسه، لكن كلامنا خلاني أعرفك أكتر من ناس بعرفهم من سنين. علاقتنا بدت في الفاشر قبل سنتين، والحرب فرقتنا بين تشاد والسودان، لكن القلوب ما اتفرقت.</p>
+    <!-- صندوق الهدية - لما تضغطو الموسيقى بتشتغل -->
+    <div class="gift-box" onclick="openGift()">🎁</div>
+    <p id="giftText" style="color:#d9405b; font-weight:600; margin-bottom:20px;"></p>
+
+    <!-- الأسئلة الرومانسية - كتيرة ومقسمة -->
+    <div class="questions-section">
+      <h3 style="color:#ff2a54; margin-bottom:15px;">💌 أسئلتي ليكِ يا أنوار</h3>
+      
+      <button class="question-btn" onclick="toggleSub('sub1')">💖 عن حبنا</button>
+      <div class="sub-questions" id="sub1">
+        <button class="sub-btn" onclick="showAnswer('أول مرة حسيت إني بحبك كان متين؟')">أول مرة حسيت إني بحبك كان متين؟</button>
+        <button class="sub-btn" onclick="showAnswer('لو أقدر أرجع بالزمن ح أختار ألقاك متين؟')">لو أقدر أرجع بالزمن ح أختار ألقاك متين؟</button>
+        <button class="sub-btn" onclick="showAnswer('شنو أكتر حاجة بتخليكِ تبتسمي لما تفتكريني؟')">شنو أكتر حاجة بتخليكِ تبتسمي لما تفتكريني؟</button>
+        <div class="answer-box" id="answer1"></div>
       </div>
-      <div class="story-box">
-        <h3>وعدي ليكِ</h3>
-        <p>بوعدك يا أنوار إني ما أسيبك، ومهما طالت المسافة ح أجيك. اليوم الجاي دا ح نعوض كل الثواني الفاتت بفرح ما بيخلص.</p>
+
+      <button class="question-btn" onclick="toggleSub('sub2')">🌙 عن شوقي ليكِ</button>
+      <div class="sub-questions" id="sub2">
+        <button class="sub-btn" onclick="showAnswer('أكتر حاجة وحشتني فيكِ شنو هسه؟')">أكتر حاجة وحشتني فيكِ شنو هسه؟</button>
+        <button class="sub-btn" onclick="showAnswer('لو اتقابلنا هسه أول حاجة ح تعملها شنو؟')">لو اتقابلنا هسه أول حاجة ح تعملها شنو؟</button>
+        <button class="sub-btn" onclick="showAnswer('بتحلمي بينا وين بعد 5 سنين؟')">بتحلمي بينا وين بعد 5 سنين؟</button>
+        <div class="answer-box" id="answer2"></div>
+      </div>
+
+      <button class="question-btn" onclick="toggleSub('sub3')">✨ عنكِ أنتِ</button>
+      <div class="sub-questions" id="sub3">
+        <button class="sub-btn" onclick="showAnswer('كلمة واحدة بوصفك بيها شنو؟')">كلمة واحدة بوصفك بيها شنو؟</button>
+        <button class="sub-btn" onclick="showAnswer('شنو أكتر حاجة بتميزي بيها عن أي زول تاني؟')">شنو أكتر حاجة بتميزي بيها عن أي زول تاني؟</button>
+        <button class="sub-btn" onclick="showAnswer('لو كنتِ أغنية، ح تكوني شنو؟')">لو كنتِ أغنية، ح تكوني شنو؟</button>
+        <div class="answer-box" id="answer3"></div>
+      </div>
+
+      <button class="question-btn" onclick="toggleSub('sub4')">💍 عن مستقبلنا</button>
+      <div class="sub-questions" id="sub4">
+        <button class="sub-btn" onclick="showAnswer('وين نفسك نتزوج ونعيش؟')">وين نفسك نتزوج ونعيش؟</button>
+        <button class="sub-btn" onclick="showAnswer('شنو أول حاجة عايزة تعمليها معاي لما نتقابل؟')">شنو أول حاجة عايزة تعمليها معاي لما نتقابل؟</button>
+        <button class="sub-btn" onclick="showAnswer('وعد واحد عايزاني أوعدك بيهو شنو؟')">وعد واحد عايزاني أوعدك بيهو شنو؟</button>
+        <div class="answer-box" id="answer4"></div>
       </div>
     </div>
 
-    <!-- قسم أغرب قصص الحب -->
-    <div id="weird" class="tab-content">
-      <div class="story-box">
-        <h3>قصة الحب عبر الرسائل لـ 20 سنة</h3>
-        <p>
-        في قرية صغيرة في ألمانيا سنة 1950، كان في شاب اسمو هانز بيشتغل ساعي بريد. يوم من الأيام وصلتو رسالة غلط، كانت موجهة لبنت اسمها ماريا في نفس القرية. بدل ما يرجعها، قرر يرد عليها برسالة من عندو.
-        <br><br>
-        ماريا كانت مندهشة لكن ردت. ومن هنا بدت مراسلات بيناتهم استمرت 20 سنة كاملة. المشكلة إنو الاتنين كانو خجلانين يتلاقو، ففضلو يكتبو لبعض عن كل حاجة: أحلامهم، خوفهم، حبهم، حتى تفاصيل يومهم العادي.
-        <br><br>
-        بعد 20 سنة، أخيراً اتشجعو واتفقو يتقابلو في نفس المكان الإتلاقو فيهو بالرسالة الأولى - مكتب البريد. لما شافو بعض، ما احتاجو كلام. 20 سنة من الرسائل خلتهم يعرفو بعض أكتر من أي اتنين متزوجين.
-        <br><br>
-        اتزوجو بعد شهر، وعاشو مع بعض 40 سنة تانية لحد ما ماتو في نفس الأسبوع. القصة دي بتثبت إنو الحب الحقي ما محتاج شوفة عين، محتاج قلب بيسمع ويفهم.
-        </p>
-      </div>
+    <!-- الأقسام الجاية من القائمة -->
+    <div id="love" class="section" style="display:none; margin-top:30px;">
+      <h3 style="color:#ff2a54;">💕 قصص حبنا</h3>
+      <p style="background:rgba(255,255,255,0.9); padding:20px; border-radius:15px; margin-top:10px; text-align:right;">
+        ما حصل اتقابلنا لسه، لكن كلامنا خلاني أعرفك أكتر من ناس بعرفهم من سنين. علاقتنا بدت في الفاشر قبل سنتين، والحرب فرقتنا بين تشاد والسودان، لكن القلوب ما اتفرقت.
+      </p>
     </div>
 
-    <!-- قسم قصص الأنبياء -->
-    <div id="prophets" class="tab-content">
-      <div class="story-box">
-        <h3>قصة حب سيدنا آدم والسيدة حواء</h3>
-        <p>
-        لما ربنا خلق سيدنا آدم عليه السلام، كان عايش براهو في الجنة. حس بالوحدة، فخلق ليهو ربنا السيدة حواء من ضلعو وهو نايم.
-        <br><br>
-        أول ما صحى وشافها، حس بالراحة والسكينة. دي أول قصة حب في التاريخ البشري. رغم إنهم اتعاقبو ونزلو الأرض، فضلو مع بعض، وصبرو على التعب والمشقة، وبنو أول بيت وأول أسرة في الدنيا.
-        </p>
-      </div>
+    <div id="weird" class="section" style="display:none; margin-top:30px;">
+      <h3 style="color:#ff2a54;">🌍 أغرب قصص الحب</h3>
+      <p style="background:rgba(255,255,255,0.9); padding:20px; border-radius:15px; margin-top:10px; text-align:right;">
+        في قرية صغيرة في ألمانيا سنة 1950، كان في شاب اسمو هانز بيشتغل ساعي بريد. وصلتو رسالة غلط لبنت اسمها ماريا، فرد عليها. بدت مراسلات بيناتهم استمرت 20 سنة كاملة من غير ما يتلاقو. لما اتلاقو أخيراً، اتزوجو وعاشو مع بعض 40 سنة تانية.
+      </p>
+    </div>
 
-      <div class="story-box">
-        <h3>قصة حب سيدنا يوسف وزليخة</h3>
-        <p>
-        سيدنا يوسف عليه السلام كان مثال للجمال والأخلاق. لما كبر في بيت العزيز، مرتو زليخة حبتو حب شديد. لكن يوسف كان تقي وخاف ربنا، فرفض واختار السجن على المعصية.
-        <br><br>
-        بعد سنين، لما بقى عزيز مصر، زليخة تابت وربنا جمعهم بالحلال. العبرة: الحب اللي بيخاف ربنا ربنا بيباركو وبيتممو على خير.
-        </p>
-      </div>
+    <div id="prophets" class="section" style="display:none; margin-top:30px;">
+      <h3 style="color:#ff2a54;">🕌 قصص الأنبياء</h3>
+      <p style="background:rgba(255,255,255,0.9); padding:20px; border-radius:15px; margin-top:10px; text-align:right;">
+        ربنا خلق حواء من ضلع آدم وهو نايم. أول ما صحى وشافها حس بالراحة والسكينة. دي أول قصة حب في التاريخ البشري.
+      </p>
     </div>
 
     <button class="logout" onclick="logout()">تسجيل خروج</button>
   </div>
 </div>
+
+<!-- الأغنية مخفية وتشتغل بالضغط -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 // كلمة السر m a
@@ -218,18 +411,43 @@ function checkPassword() {
   if(pass === 'm a') {
     document.getElementById('loginPage').style.display = 'none';
     document.getElementById('mainPage').style.display = 'block';
-    document.getElementById('error').innerText = '';
   } else {
     document.getElementById('error').innerText = 'كلمة السر غلط يا أنوار 💔';
   }
 }
 
-// التبويبات
-function openTab(tabName) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById(tabName).classList.add('active');
-  event.target.classList.add('active');
+// القائمة الجانبية
+function toggleMenu() {
+  document.getElementById('sidebarMenu').classList.toggle('active');
+  document.getElementById('overlay').classList.toggle('active');
+}
+
+// عرض الأقسام من القائمة
+function showSection(sectionId) {
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.getElementById(sectionId).style.display = 'block';
+  window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+}
+
+// تشغيل الموسيقى مع الهدية
+function openGift() {
+  document.getElementById('giftText').innerText = "✨ وعد من محمد: خروجة تجن، عشاء رومانسي، وهدية تختارينها بنفسكِ 🍕💐";
+  document.getElementById('bgMusic').play().catch(() => {
+    alert("اضغطي تاني على الهدية عشان الأغنية تشتغل");
+  });
+}
+
+// الأسئلة الفرعية
+function toggleSub(id) {
+  document.querySelectorAll('.sub-questions').forEach(s => {
+    if(s.id !== id) s.classList.remove('active');
+  });
+  document.getElementById(id).classList.toggle('active');
+}
+
+function showAnswer(text) {
+  event.target.nextElementSibling.innerText = text;
+  event.target.nextElementSibling.classList.add('show');
 }
 
 // تسجيل الخروج
@@ -239,7 +457,43 @@ function logout() {
   document.getElementById('password').value = '';
 }
 
-// Enter للدخول
+// المؤقتات
+const loveStart = new Date("Nov 12, 2024 00:00:00").getTime();
+setInterval(function() {
+  const diff = Date.now() - loveStart;
+  document.getElementById("loveDays").innerText = Math.floor(diff / 86400000);
+  document.getElementById("loveHours").innerText = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+  document.getElementById("loveMinutes").innerText = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+  document.getElementById("loveSeconds").innerText = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+}, 1000);
+
+function getNextBirthday(day, month) {
+  const now = new Date();
+  let next = new Date(now.getFullYear(), month - 1, day);
+  if (next < now) {
+    next = new Date(now.getFullYear() + 1, month - 1, day);
+  }
+  return next.getTime();
+}
+
+setInterval(function() {
+  const anwarNext = getNextBirthday(23, 7);
+  const diff = anwarNext - Date.now();
+  document.getElementById("anwarDays").innerText = Math.floor(diff / 86400000);
+  document.getElementById("anwarHours").innerText = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+  document.getElementById("anwarMinutes").innerText = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+  document.getElementById("anwarSeconds").innerText = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+}, 1000);
+
+setInterval(function() {
+  const mohammedNext = getNextBirthday(19, 4);
+  const diff = mohammedNext - Date.now();
+  document.getElementById("mohammedDays").innerText = Math.floor(diff / 86400000);
+  document.getElementById("mohammedHours").innerText = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+  document.getElementById("mohammedMinutes").innerText = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+  document.getElementById("mohammedSeconds").innerText = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+}, 1000);
+
 document.getElementById('password').addEventListener('keypress', function(e) {
   if(e.key === 'Enter') checkPassword();
 });
